@@ -157,6 +157,3 @@ def encode(number):
             return ''.join(bits)
 
 
-for i in range(0, 1024):
-    print(encode(i))
-    
