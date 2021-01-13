@@ -157,3 +157,71 @@ def encode(number):
             return ''.join(bits)
 
 
+###### DECODING FUNCTIONS: Converting Floating-Point numbers to Decimal
+# Part 1 - Find the Sign Bit
+
+def getSignBit (hexadecimal):
+    """
+        The first bit is the Sign Bit
+
+        0: Positive Decimal
+        1: Negative Decimal
+    """
+    sign = int(hexadecimal.replace(' ', '')[:1])
+    return sign
+
+def binaryToNum (hexadecimal):
+    """
+        The 8 Bits after the first bit are the Exponent Bits
+        Gives the value of the exponent of the decimal in Scientific Notation
+        We convert Binary to Number
+    """
+
+    num = 0
+    count = 0
+    for i in range(len(hexadecimal) - 1, -1, -1):
+        
+        num += int(hexadecimal[i]) * (2 ** count)
+        count += 1
+    
+    return num
+
+def getExpBit (hexadecimal):
+
+    # removes spaces and sends the 8 Exponent Bits
+    exponent = binaryToNum(hexadecimal.replace(' ', '')[1:9]) 
+
+    # exp = exponent - 127
+    # If exp > 0: Positive exponent
+    #    exp < 0: Negative exponent
+    return exponent - 127
+
+def mantissa (hexadecimal):
+    
+    num = 0
+    count = -1
+    for i in range(len(hexadecimal) - 1):
+        #print(hexadecimal[i])
+        num += int(hexadecimal[i]) * (2 ** count)
+        count -= 1
+
+    return num
+
+def getFracBit (hexadecimal):
+
+    #print(hexadecimal.replace(' ', '')[9:])
+    fraction = mantissa(hexadecimal.replace(' ', '')[9:])
+    return fraction
+
+def floatToScientific (hexadecimal):
+    
+    #get sign bit
+    sign = getSignBit(hexadecimal)
+    fraction = getFracBit(hexadecimal)
+    e = getExpBit(hexadecimal)
+
+    return str(((-1)**sign) * (1 + fraction)) + ' x ' + '2^' + str(e)
+
+if __name__ == '__main__':
+    print(floatToScientific('0100 0011 0101 0100 0000 0000 0000 0000'))
+    
