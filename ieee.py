@@ -222,6 +222,15 @@ def floatToScientific (hexadecimal):
 
     return str(((-1)**sign) * (1 + fraction)) + ' x ' + '2^' + str(e)
 
+def floatToDecimal (hexadecimal):
+
+    sign = getSignBit(hexadecimal)
+    fraction = getFracBit(hexadecimal)
+    e = getExpBit(hexadecimal)
+
+    return ((-1)**sign) * (1 + fraction) + (2**e)
+    
+
 if __name__ == '__main__':
-    print(floatToScientific('0100 0011 0101 0100 0000 0000 0000 0000'))
+    print(floatToDecimal('0100 0011 0101 0100 0000 0000 0000 0000'))
     
