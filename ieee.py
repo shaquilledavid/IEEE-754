@@ -244,15 +244,8 @@ def floatToDecimal (hexadecimal):
     """
 
     sign = getSignBit(hexadecimal)
-    print("Sign:" + str(((-1)**sign)))
-
     e = getExpBit(hexadecimal)
-    print("Exponent:" + str(e))
-    
     fraction = getFracBit(hexadecimal)
-    print("Fraction:" + str(fraction))
-    
-    
 
     return ((-1)**sign) * (1 + fraction) * (2**e)
     
