@@ -262,7 +262,7 @@ def floatToScientific (binary):
     """
     if ifBinary(binary):
         if len(binary) < 32:
-            binary += ('0' * (32 - len(binary)))
+           binary = ('0' * (32 - len(binary))) + binary
     
         #get sign bit
         sign = getSignBit(binary)
@@ -288,7 +288,7 @@ def floatToDecimal (binary):
 
     if ifBinary(binary):
         if len(binary) < 32:
-            binary += ('0' * (32 - len(binary)))
+            binary = ('0' * (32 - len(binary))) + binary
 
         sign = getSignBit(binary)
         e = getExpBit(binary)
