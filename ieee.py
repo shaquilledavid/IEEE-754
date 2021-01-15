@@ -244,12 +244,12 @@ def floatToDecimal (hexadecimal):
     """
 
     sign = getSignBit(hexadecimal)
-    fraction = getFracBit(hexadecimal)
     e = getExpBit(hexadecimal)
+    fraction = getFracBit(hexadecimal)
 
-    return ((-1)**sign) * (1 + fraction) + (2**e)
+    return ((-1)**sign) * (1 + fraction) * (2**e)
     
 
 if __name__ == '__main__':
-    print(floatToDecimal('0100 0011 0101 0100 0000 0000 0000 0000'))
+    print(floatToDecimal('11000000101000000000000000000000'))
     
