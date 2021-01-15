@@ -21,16 +21,22 @@ import math
 
 def changeWholeToBin(number):
     """Change a whole number to its binary representation"""
+        
     bits = []
-    last_bit = number%2
+        
+    absnumber = abs(number)
+    last_bit = absnumber%2
     bits.append(last_bit)
 
-    quotient = number//2
+    quotient = absnumber//2
 
     while quotient != 0:
         bits.append(quotient%2)
         quotient = quotient//2
 
+    if number < 0:
+        bits.append('-')
+        
     bits.reverse()
     
     return ''.join([str(elem) for elem in bits])
@@ -38,7 +44,8 @@ def changeWholeToBin(number):
 def changeDecimalToBin(decimal):
     """Return the first 20 bits of the decimal number to binary"""
     bits = []
-
+    if decimal == 0:
+        return ''
     i = 0
     while i < 20:
         product = decimal * 2
@@ -54,13 +61,9 @@ def numToBinary(num):
     >>> numToBinary(263.3)
     '100000111.01001100110011001100'
     """
-    
-    if (float(num)).is_integer() == True:
-        return changeWholeToBin(num)
-    else:
-        number_dec = num - int(num)
-        number_whole = int(num)
-        return changeWholeToBin(number_whole) + '.' + changeDecimalToBin(number_dec)
+    number_dec = num - int(num)
+    number_whole = int(num)
+    return changeWholeToBin(number_whole) + '.' + changeDecimalToBin(abs(number_dec))
     
 # Part 2 - Change to scientific notation
 def scientific(binarynum):
@@ -73,16 +76,29 @@ def scientific(binarynum):
     bits = []
     for i in binarynum:
         bits.append(i)
-
-    if '.' in bits:
-        exponent = bits.index(".") - 1 #DOUBLE CHECK THIS
-        bits.remove(".")
-        rest = ''.join(bits[1:])
-    elif '.' not in bits:
-        exponent = len(bits) - 1
-        rest = ''.join(bits[1:])
         
-    return bits[0] + '.' + rest + 'e' + str(exponent)
+    if bits[0] == '-':
+        x = bits[1:]
+        if '.' in bits:
+            exponent = x.index(".") - 1
+            x.remove(".")
+            rest = ''.join(x[1:])
+        elif '.' not in bits:
+            exponent = len(x) - 1
+            rest = ''.join(x[1:])
+            
+        return x[0] + '.' + rest + 'e' + str(exponent)
+        
+    else:
+        if '.' in bits:
+            exponent = bits.index(".") - 1 #DOUBLE CHECK THIS
+            bits.remove(".")
+            rest = ''.join(bits[1:])
+        elif '.' not in bits:
+            exponent = len(bits) - 1
+            rest = ''.join(bits[1:])
+
+        return bits[0] + '.' + rest + 'e' + str(exponent)
 
 
 # Step 3 - [ENCODE] Write the scientific notation in IEEE-754 format
@@ -131,7 +147,8 @@ def encode(number):
             scientificrep = scientific(binaryrep)
             scientificrep = scientificrep.replace(".", '')
             bias = 127 #the exponential bias for a single precision number is 127
-            exponent = bias + int(scientificrep[-1])
+            indexofe = scientificrep.index('e')
+            exponent = bias + int(scientificrep[indexofe + 1:])
             bits = []
 
             if number > 0:
@@ -155,6 +172,7 @@ def encode(number):
                     j = j - 1
 
             return ''.join(bits)
+
 
 
 ###### DECODING FUNCTIONS: Converting Floating-Point numbers to Decimal
