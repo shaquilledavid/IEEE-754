@@ -160,31 +160,31 @@ def encode(number):
 ###### DECODING FUNCTIONS: Converting Floating-Point numbers to Decimal
 # Part 1 - Find the Sign Bit
 
-def getSignBit (hexadecimal):
+def getSignBit (sign):
     """
         The first bit is the Sign Bit
 
         0: Positive Decimal
         1: Negative Decimal
     """
-    sign = int(hexadecimal.replace(' ', '')[:1])
-    return sign
+    return int(sign.replace(' ', '')[:1])
+    
 
-def binaryToNum (hexadecimal):
+def binaryToNum (binary):
     """
         convert Binary to Number
     """
 
     num = 0
     count = 0
-    for i in range(len(hexadecimal) - 1, -1, -1):
+    for i in range(len(binary) - 1, -1, -1):
         
-        num += int(hexadecimal[i]) * (2 ** count)
+        num += int(binary[i]) * (2 ** count)
         count += 1
     
     return num
 
-def getExpBit (hexadecimal):
+def getExpBit (exp):
     """
         The 8 Bits after the first bit are the Exponent Bits
         Gives the value of the exponent of the decimal in Scientific Notation
@@ -192,28 +192,28 @@ def getExpBit (hexadecimal):
     """
 
     # removes spaces and sends the 8 Exponent Bits
-    exponent = binaryToNum(hexadecimal.replace(' ', '')[1:9]) 
+    exponent = binaryToNum(exp.replace(' ', '')[1:9]) 
 
     # exp = exponent - 127
     # If exp > 0: Positive exponent
     #    exp < 0: Negative exponent
     return exponent - 127
 
-def mantissa (hexadecimal):
+def mantissa (binary):
     """
         Finding the Mantissa from Float-Point
     """
     
     num = 0
     count = -1
-    for i in range(len(hexadecimal) - 1):
+    for i in range(len(binary) - 1):
         #print(hexadecimal[i])
-        num += int(hexadecimal[i]) * (2 ** count)
+        num += int(binary[i]) * (2 ** count)
         count -= 1
 
     return num
 
-def getFracBit (hexadecimal):
+def getFracBit (frac):
     """
         The remaining 23 Bits are the Mantissa
         Gives us the fraction value
@@ -221,35 +221,46 @@ def getFracBit (hexadecimal):
     """
 
     #print(hexadecimal.replace(' ', '')[9:])
-    fraction = mantissa(hexadecimal.replace(' ', '')[9:])
+    fraction = mantissa(frac.replace(' ', '')[9:])
     return fraction
 
-def floatToScientific (hexadecimal):
+def ifBinary(binary):
+    
+    if len(binary) > 32:
+        return False
+    
+    #Returns True/False for each number in binary matches '1' or '0' as a list
+    binary_num = ['1', '0']
+    matched = [num in binary_num for num in binary]
+    return all(matched)
+    
+
+def floatToScientific (binary):
     """
         Writing the decimal in scientific notation using the
         Sign, Exponent, and Fraction
     """
     
     #get sign bit
-    sign = getSignBit(hexadecimal)
-    fraction = getFracBit(hexadecimal)
-    e = getExpBit(hexadecimal)
+    sign = getSignBit(binary)
+    fraction = getFracBit(binary)
+    e = getExpBit(binary)
 
     return str(((-1)**sign) * (1 + fraction)) + ' x ' + '2^' + str(e)
 
-def floatToDecimal (hexadecimal):
+def floatToDecimal (binary):
     """
         Finding the actual decimal number using the
         Sign, Exponent, and Fraction
     """
 
-    sign = getSignBit(hexadecimal)
-    e = getExpBit(hexadecimal)
-    fraction = getFracBit(hexadecimal)
+    sign = getSignBit(binary)
+    e = getExpBit(binary)
+    fraction = getFracBit(binary)
 
     return ((-1)**sign) * (1 + fraction) * (2**e)
     
 
 if __name__ == '__main__':
-    print(floatToDecimal('11000000101000000000000000000000'))
+    print(ifBinary('101010101010101010101010'))
     
