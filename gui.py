@@ -5,11 +5,11 @@ import ieee
 def encode_button(number, result):
     if number == "inf" or number == "-inf":
         encoded_val=ieee.encode(number)
-        result['text'] = "Binary Value: \n" + encoded_val
+        result['text'] = "IEEE-754 Representation: \n" + encoded_val
     else:
         try:
             encoded_val=ieee.encode(float(number))
-            result['text'] = "Binary Value: \n" + encoded_val
+            result['text'] = "IEEE-754 Representation: \n" + encoded_val
         except:
             result['text'] =  "Not a valid input"
         
@@ -26,6 +26,7 @@ HEIGHT = 300
 WIDTH = 500
 
 root = tk.Tk()
+root.title("IEEE-754 Encoder/Decoder")
 
 canvas = tk.Canvas(root, height=HEIGHT, width=WIDTH)
 canvas.pack()
