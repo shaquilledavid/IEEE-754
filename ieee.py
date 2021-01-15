@@ -240,13 +240,19 @@ def floatToScientific (binary):
         Writing the decimal in scientific notation using the
         Sign, Exponent, and Fraction
     """
+    if ifBinary(binary):
+        if len(binary) < 32:
+            binary += ('0' * (32 - len(binary)))
     
-    #get sign bit
-    sign = getSignBit(binary)
-    fraction = getFracBit(binary)
-    e = getExpBit(binary)
+        #get sign bit
+        sign = getSignBit(binary)
+        fraction = getFracBit(binary)
+        e = getExpBit(binary)
 
-    return str(((-1)**sign) * (1 + fraction)) + ' x ' + '2^' + str(e)
+        return str(((-1)**sign) * (1 + fraction)) + ' x ' + '2^' + str(e)
+
+    else:
+        return 'Not Valid'
 
 def floatToDecimal (binary):
     """
@@ -254,13 +260,36 @@ def floatToDecimal (binary):
         Sign, Exponent, and Fraction
     """
 
-    sign = getSignBit(binary)
-    e = getExpBit(binary)
-    fraction = getFracBit(binary)
+    if ifBinary(binary):
+        if len(binary) < 32:
+            binary += ('0' * (32 - len(binary)))
 
-    return ((-1)**sign) * (1 + fraction) * (2**e)
+        sign = getSignBit(binary)
+        e = getExpBit(binary)
+        fraction = getFracBit(binary)
+
+        return ((-1)**sign) * (1 + fraction) * (2**e)
+
+    else:
+        return 'Not valid'
     
 
 if __name__ == '__main__':
-    print(ifBinary('101010101010101010101010'))
+    print(floatToDecimal('11000000101'))
     
+
+"""
+if ifBinary(binary):
+        if len(binary) < 32:
+            binary.append['0' * (len(binary) - 32)]
+        
+    
+        #get sign bit
+        sign = getSignBit(binary)
+        fraction = getFracBit(binary)
+        e = getExpBit(binary)
+
+        return str(((-1)**sign) * (1 + fraction)) + ' x ' + '2^' + str(e)
+    else:
+        return 'Not valid'
+"""
