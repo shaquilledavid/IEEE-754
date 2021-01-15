@@ -15,3 +15,14 @@ Mohid Sharif
 ---
 Screenshots
 ---
+![ezgif-3-ad9b9358c189](https://user-images.githubusercontent.com/47598577/104774099-0f3d4b80-5744-11eb-8728-036a36aa6135.gif)
+
+---
+
+How to Run the Program
+---
+
+*ensure that you have Python 3.x installed and working*
+1. Clone the repository to your local drive.
+2. Navigate to the folder and double click on *gui.py*.
+3. The interface will appear. Enter a decimal number to encode, or a binary number to decode!
