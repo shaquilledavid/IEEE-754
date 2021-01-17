@@ -26,3 +26,11 @@ How to Run the Program
 1. Clone the repository to your local drive.
 2. Navigate to the folder and double click on *gui.py*.
 3. The interface will appear. Enter a decimal number to encode, or a binary number to decode!
+
+---
+
+Competition Placement
+---
+![pyjac](https://user-images.githubusercontent.com/47598577/104853815-51e05e80-58d1-11eb-95fd-0e0896f8b674.png)
+
+*We received Runner-Up and Best Presentation Awards.* 
